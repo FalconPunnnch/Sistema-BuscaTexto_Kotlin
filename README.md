@@ -48,5 +48,5 @@ Se muestra:
 3. Algorithms Unlocked (Thomas H. Cormen). (FB)
 4. Kotlin Cookbook - A Problem-Focused Approach (Ken Kousen). (Para problemas en sintáxis).
 5. www.geeksforgeeks.org
-  - /file-class-in-java/?ref=gcse (para carga de archivos).
+    - /file-class-in-java/?ref=gcse (para carga de archivos).
 6. https://chat.openai.com/ (ChatGPT para problemas menores al compilar).
