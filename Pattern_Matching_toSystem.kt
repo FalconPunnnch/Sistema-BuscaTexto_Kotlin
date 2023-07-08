@@ -44,7 +44,7 @@ fun fbSearch(textoFB: String, patron: String): List<Int> {
 // Boyer-Moore
 // Función para crear la tabla de saltos de caracteres mal emparejados
 private fun createBadCharacterTable(pattern: String): IntArray {
-    val table = IntArray(65536) { pattern.length } //Longitud máxima de 65536 caracteres
+    val table = IntArray(999999) { pattern.length } //Longitud máxima de 999999 caracteres
 
     for (i in 0 until pattern.length - 1) {
         val c = pattern[i]
