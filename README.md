@@ -1,4 +1,4 @@
-<sub>beta 1.0 - Posibles actualizaciones futuras.</sub>
+<sub>beta 1.2 - Posibles actualizaciones futuras.</sub>
 # Sistema de Búsqueda de Textos en Kotlin
 ## Sistema con menú de acceso y búsqueda de textos mediante 3 posibles algoritmos
 ## *Proyeto elaborado para el curso de Lenguajes de Programación de la Universidad de Lima*
