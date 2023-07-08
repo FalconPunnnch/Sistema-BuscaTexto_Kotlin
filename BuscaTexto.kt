@@ -2,7 +2,7 @@ import java.util.Scanner
 import java.io.File
 import kotlin.system.measureTimeMillis
 
-data class ResultadoBusqueda(val texto: String, val busqueda: String, val duracion: Long, val apariciones: Int)
+data class ResultadoBusqueda(val texto: String, val busqueda: String, val duracion: Long, val apariciones: Int, val tipoBusqueda: String)
 
 fun main(){
     //Ingreso de usuarios mediante diccionario con datos almacenados.
@@ -72,6 +72,15 @@ fun main(){
                         print("Ingrese el número de la opción deseada: ")
                         val searchOption = scanner.nextInt()
 
+                        val tipoBusqueda = when (searchOption) {
+                            1 -> "por Fuerza Bruta"
+                            2 -> "por Boyer-Moore"
+                            3 -> "por KMP"
+                            else -> {
+                                println("Opción inválida. No se realizará ninguna acción adicional.")
+                                continue
+                            }
+                        }
                         scanner.nextLine()
                         print("Ingrese la palabra / oración a buscar: ")
                         val busqueda = scanner.nextLine()
@@ -96,7 +105,7 @@ fun main(){
                                             println("No se encontraron coincidencias.")
                                         }
                                     }
-                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size)
+                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size, tipoBusqueda)
                                     history.add(resultado)
                                 }.let {
                                     posiciones = fbSearch(text, busqueda).toList()
@@ -118,7 +127,7 @@ fun main(){
                                             println("No se encontraron coincidencias.")
                                         }
                                     }
-                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size)
+                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size, tipoBusqueda)
                                     history.add(resultado)
                                 }.let {
                                     posiciones = boyerMooreSearch(busqueda, text).toList()
@@ -140,7 +149,7 @@ fun main(){
                                             println("No se encontraron coincidencias.")
                                         }
                                     }
-                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size)
+                                    val resultado = ResultadoBusqueda(text, busqueda, duracion, resultados.size, tipoBusqueda)
                                     history.add(resultado)
                                 }.let {
                                     posiciones = searchByKMP(text, busqueda).toList()
@@ -171,7 +180,11 @@ fun main(){
                                         if (posiciones.isNotEmpty()) {
                                             println("Apariciones de la palabra/oración '$busqueda':")
                                             posiciones.forEach { posicion ->
-                                                println(text.substring(posicion, posicion + busqueda.length))
+                                                val startIndex = maxOf(0, posicion - 45)
+                                                val endIndex = minOf(text.length, posicion + busqueda.length + 45)
+                                                val context = text.substring(startIndex, endIndex)
+                                                val highlightedContext = context.replace(busqueda, "<$busqueda>")
+                                                println(highlightedContext)
                                             }
                                         } else {
                                             println("No se encontraron apariciones de la palabra/oración '$busqueda'.")
@@ -208,11 +221,13 @@ fun main(){
                     }
                 }
                 3 -> {
-                    println("Historial de búsquedas:")
-                    val historialOrdenado = history.sortedByDescending { it.apariciones }
-                    for ((index, resultado) in historialOrdenado.withIndex()) {
-                        println("Búsqueda ${index + 1}:")
+                    println("Historial de búsquedas!")
+                    println(" ")
+                    val historialOrdenado = history.sortedByDescending {it.apariciones}
+                    for((index, resultado) in historialOrdenado.withIndex()){
+                        println("Búsqueda ${index + 1}, ${resultado.tipoBusqueda}:")
                         println("Texto elegido: ${resultado.texto}")
+                        println(" ")
                         println("Palabra/oración de búsqueda: ${resultado.busqueda}")
                         println("Tiempo de duración de la búsqueda: ${resultado.duracion} ms")
                         println("Cantidad de apariciones: ${resultado.apariciones}")
@@ -286,7 +301,7 @@ fun fbSearch(textoFB: String, patron: String): List<Int> {
 // Boyer-Moore
 // Función para crear la tabla de saltos de caracteres mal emparejados
 private fun createBadCharacterTable(pattern: String): IntArray {
-    val table = IntArray(65536) { pattern.length } //Longitud máxima de 65536 caracteres
+    val table = IntArray(999999) { pattern.length } //Longitud máxima de 999999 caracteres
 
     for (i in 0 until pattern.length - 1) {
         val c = pattern[i]
