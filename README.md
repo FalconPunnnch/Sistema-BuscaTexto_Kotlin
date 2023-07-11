@@ -18,7 +18,7 @@ Los textos son registrados mediante la ruta de ubicación de los mismos.
 Se dan 3 opciones de algoritmos de búsqueda de cadenas al usuario:
 - Fuerza Bruta
 - Boyer-Moore
-- KMP (Knutt-Morris-Pratt)
+- KMP (Knuth-Morris-Pratt)
 (Los algoritmos ya están implementados para su uso directo con este sistema).
 
 Una vez elegido, el usuario debe ingresar la cadena a buscar. Se mostrarán las posiciones del texto en que se encontraron coincidencias, además de otro menú con las siguientes opciones:
